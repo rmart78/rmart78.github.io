@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Whack-A-Mole</title>
+	<link rel="stylesheet" type="text/css" href="/css/whack-a-mole.css">
+
+	<link href='http://fonts.googleapis.com/css?family=Bangers' rel='stylesheet' type='text/css'>
+
+	<style>
+
+		.container {
+		border: 3px solid #ff9100;
+		}	
+
+/*	.row {
+		border: 1px solid blue;
+		}*/
+
+	.column {
+		border: 3px solid #ff9100;
+		}
+
+	</style>
+	<audio id="nelson" src="/nelson.mp3"></audio>
+</head>
+<body>
+	<div id="hansContainer">
+		<div id="title">Whack-A-Moleman!</div>
+	<img id="hans" src="/img/img_1334.png">
+	<button id="start">Start</button>
+	</div>
+	
+	<div class="container">
+		<div class="row">
+			<div id="one" class="column one-third overflow"></div>
+			<div id="two" class="column one-third"></div>
+			<div id="three" class="column one-third overflow"></div>
+		</div>
+		<div class="row">
+			<div id="four" class="column one-third"></div>
+			<div id="five" class="column one-third">
+				<div class="score" id="scoreTitle">Score</div>
+				<div class="score" id="scoreScore">0</div>
+			</div>
+			<div id="six" class="column one-third"></div>
+		</div>
+		<div class="row">
+			<div id="seven" class="column one-third overflow"></div>
+			<div id="eight" class="column one-third"></div>
+			<div id="nine" class="column one-third overflow"></div>
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+	<script src="/js/jquery-ui.js"></script>
+
+	<script type="text/javascript">
+	"use strict";
+
+	var loopDelay1;
+
+	var theScore = 0;
+
+		  function tileGenerator() {
+    		var tiles = ['one','two','three','four','six','seven','eight','nine'];
+    		var randomTile = tiles[Math.floor(Math.random() * tiles.length)];
+    		return randomTile;
+    		console.log(randomTile);
+		  }
+
+		  function molemanGenerator() {
+    		var moles = ['<img id="avocado" src="/img/img_1331.png">','<img id="avocado" src="/img/img_1332.png">','<img id="avocado" src="/img/img_1333.png">'];
+    		var randomMole = moles[Math.floor(Math.random() * moles.length)];
+    		return randomMole;
+		  }
+
+		  var superTile = '';
+
+		  function startGame () {
+		  	var random = '#' + tileGenerator();
+		  	superTile = random;
+		  	$(random).html($(molemanGenerator()).fadeIn(1000));
+		  	console.log(superTile);
+		  	jumpTile();
+		  }
+
+		  function chaseMole () {
+		  	var random2 = '#' + tileGenerator();
+		  	if (superTile != random2) {
+		  		$(superTile).html('');
+		  		$(random2).html($(molemanGenerator()).fadeIn(1000));
+		  		superTile = random2;
+		  	} else {
+		  		chaseMole();
+		  	}
+		  }
+
+		  function jumpTile () {
+            loopDelay1 = setInterval(function(){
+            	chaseMole();
+            }, 1500);
+        }
+
+        var buttonValue = 0;
+
+		   $('#start').click(function(){
+		   	if (buttonValue == 1) {
+		   		location.reload(true);
+		   	} else {
+                startGame();
+                $('#start').html('Reset');
+                buttonValue = 1;
+            }
+    		});
+
+		    
+		    $('.column').click(function(){
+		    	if (('#' + this.id) == superTile) {
+		    	$('#avocado').effect('explode', 100);
+		    	clearInterval(loopDelay1);
+		    	console.log(superTile);
+		    	chaseMole();
+		    	jumpTile();	
+		    	theScore++;
+		    	$('#scoreScore').html(theScore);
+		    	console.log(this.id);
+		    	console.log('it is now working, bud!')
+		    } else {
+		    	document.getElementById("nelson").play();
+		    	console.log('Nope, try again.');
+		    }
+    		});
+
+
+        // });
+
+
+
+	</script>
+
+</body>
+</html>
