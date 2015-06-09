@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rock Salt</title>
+	<link href='http://fonts.googleapis.com/css?family=Bangers' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="/css/blog.css">
+</head>
+<body id="body">
+	<nav id="navbar">
+			<ul>
+				<li class="navlist">About</li>
+				<li class="navlist">Blog</a></li>
+				<li class="navlist">Archive</li>
+				<li class="navlist">Write for Us</li>
+				<li class="navlist">Contact Us</li>
+			</ul>	
+	</nav>
+	<div id="title">Rock Salt</div>
+	<main id="main_container"><!-- main container -->
+		<div id="main_left">
+			<img class="clearfix" id="cloud" src="/img/img_1236.png" alt="cloud">
+			<h1><strong>About Rock Salt</strong></h1>
+			<p>Started in 2015, Rock Salt attempts to find meaning in the sometimes trivial, and other times profound, things that make up the world around us.</p>
+			<p>The things I write about will often be random, but I promise to never knee-jerk; if I've put it here, that means I've put some thought into it - whether you agree with it or not.</p>
+		</div>
+		<div id="main_right"></div>
+	</main>
+	<footer></footer>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+	<script type="text/javascript">
+
+			$.ajax('/data/originalBlog.json').done(function(data) {
+
+				var htmlString = '';
+
+		    	$.each(data, function(index,object) {
+		        	htmlString += '<h2>' + object.date + '</h2>';
+		        	htmlString += '<h1>' + object.title + '</h1>';
+		        	htmlString += '<h3>' + object.author + '</h3>';
+		        	htmlString += '<img class="blog_photo" src="' + object.photo_url + '">';
+		        	htmlString += '<p>' + object.content + '</p><br>';
+	    		});
+
+
+	    	
+	    		console.log(htmlString);
+
+
+	    		$('#main_right').html(htmlString);
+
+			});
+
+			$.ajax('/data/originalBlog.json').fail(function(data) {
+					console.log('This failed');
+			});
+
+	</script>
+
+
+
+</body>	
+</html>
